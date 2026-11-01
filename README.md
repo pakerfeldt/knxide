@@ -42,6 +42,8 @@ knxide-tokio = "0.1"
 tokio = { version = "1", features = ["macros", "rt"] }
 ```
 
+Or add just `knxide = "0.1"`, which bundles all of them.
+
 ```rust
 use std::time::Duration;
 use knxide_core::{dpt, ga};
@@ -61,6 +63,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 | Crate | What it is |
 |---|---|
+| `knxide` | All of the below in one crate |
 | `knxide-core` | Addresses, telegrams and DPTs. No I/O, works without `std` |
 | `knxide-ip` | KNXnet/IP frames and connection logic. No I/O, so you can use any runtime |
 | `knxide-tokio` | Ready-to-use async client on top of tokio |

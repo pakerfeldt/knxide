@@ -13,6 +13,7 @@ protocol code.
 
 | Crate | Role |
 |---|---|
+| `knxide` | facade: re-exports core, ip, tokio, project (features `tokio`, `project`) |
 | `knxide-core` | addresses, cEMI, TPCI/APCI, DPT codecs. `no_std`, no I/O |
 | `knxide-ip` | KNXnet/IP frames + sans-IO state machines. No I/O, no async |
 | `knxide-tokio` | async adapter, owns sockets and timers |

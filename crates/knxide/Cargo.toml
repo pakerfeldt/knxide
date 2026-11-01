@@ -1,0 +1,27 @@
+[package]
+name = "knxide"
+description = "KNX over KNXnet/IP for Rust: one crate that re-exports knxide-core, knxide-ip, knxide-tokio and knxide-project."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+keywords = ["knx", "knxnet-ip", "home-automation", "building-automation", "tokio"]
+categories = ["network-programming", "asynchronous", "hardware-support"]
+
+[features]
+default = ["tokio", "project"]
+# The async client. Without it you get the I/O-free building blocks only.
+tokio = ["dep:knxide-tokio"]
+# Import group addresses from ETS exports.
+project = ["dep:knxide-project"]
+
+[dependencies]
+knxide-core.workspace = true
+knxide-ip.workspace = true
+knxide-project = { workspace = true, optional = true }
+knxide-tokio = { workspace = true, optional = true }
+
+[lints]
+workspace = true
