@@ -1,0 +1,24 @@
+[package]
+name = "knxide-cli"
+description = "Command-line tool for discovering, monitoring, reading and writing a KNX bus over KNXnet/IP."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "knxide"
+path = "src/main.rs"
+
+[dependencies]
+knxide-core.workspace = true
+knxide-ip.workspace = true
+knxide-project.workspace = true
+knxide-tokio.workspace = true
+tokio = { workspace = true, features = ["signal"] }
+
+[dev-dependencies]
+knxide-testkit.workspace = true
+
+[lints]
+workspace = true

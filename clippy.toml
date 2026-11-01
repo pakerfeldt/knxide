@@ -1,0 +1,5 @@
+# The no-panic lints enabled in knxide-core and knxide-ip apply to library code only.
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+allow-panic-in-tests = true
+allow-indexing-slicing-in-tests = true

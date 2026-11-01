@@ -1,0 +1,28 @@
+[package]
+name = "knxide-monitor"
+description = "Web console for a KNX bus: live monitor and sender, built on knxide."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+axum = { version = "0.8", default-features = false, features = ["http1", "tokio", "ws", "query"] }
+knxide-core.workspace = true
+knxide-ip.workspace = true
+knxide-project.workspace = true
+knxide-tokio.workspace = true
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { workspace = true, features = ["rt-multi-thread", "signal"] }
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt", "env-filter", "ansi"] }
+
+[dev-dependencies]
+futures-util = { version = "0.3", default-features = false, features = ["sink"] }
+knxide-testkit.workspace = true
+tokio-tungstenite = "0.30"
+
+[lints]
+workspace = true

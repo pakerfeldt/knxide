@@ -1,0 +1,23 @@
+[package]
+name = "knxide-proxy"
+description = "KNXnet/IP tunnelling proxy: one tunnel to a real gateway, shared by any number of clients."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+knxide-core.workspace = true
+knxide-ip.workspace = true
+knxide-tokio.workspace = true
+socket2.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "signal"] }
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt", "env-filter", "ansi"] }
+
+[dev-dependencies]
+knxide-testkit.workspace = true
+
+[lints]
+workspace = true

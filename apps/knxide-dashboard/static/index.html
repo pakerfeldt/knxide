@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0e13" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>knxide</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div id="offline" class="offline" hidden></div>
+
+  <header class="bar">
+    <div class="bar-inner">
+      <div class="bar-top">
+        <div class="heading">
+          <h1 id="title" class="title">Home</h1>
+          <div id="today" class="today"></div>
+        </div>
+        <span id="conn" class="conn" data-status="connecting" title="Connecting"></span>
+        <button id="edit-btn" class="icon-btn" type="button" title="Edit dashboard" aria-label="Edit dashboard" data-t-title>
+          <svg viewBox="0 0 24 24"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3z"/><path d="m14 8 2 2"/></svg>
+        </button>
+      </div>
+      <nav id="pages" class="pages" aria-label="Pages"></nav>
+    </div>
+  </header>
+
+  <div id="edit-bar" class="edit-bar" hidden>
+    <label class="edit-field">
+      <span data-t>Page</span>
+      <input id="page-name" type="text" placeholder="Page name" data-t-ph>
+    </label>
+    <button id="add-page" class="btn" type="button" data-t>+ Page</button>
+    <button id="suggest-btn" class="btn" type="button" data-t>Suggest from project…</button>
+    <button id="delete-page" class="btn danger" type="button" data-t>Delete page</button>
+    <label class="edit-field">
+      <span data-t>Language</span>
+      <select id="lang-select"><option value="en">English</option><option value="sv">Svenska</option></select>
+    </label>
+    <label class="edit-field title-field">
+      <span data-t>Dashboard title</span>
+      <input id="title-input" type="text">
+    </label>
+    <span class="spacer"></span>
+    <button id="cancel-edit" class="btn ghost" type="button" data-t>Cancel</button>
+    <button id="done-edit" class="btn primary" type="button" data-t>Save</button>
+  </div>
+
+  <main id="grid" class="page" aria-live="off"></main>
+
+  <dialog id="tile-dialog" class="dialog">
+    <form id="tile-form" method="dialog">
+      <h2 id="tile-dialog-title" data-t>Tile</h2>
+      <label class="field">
+        <span data-t>Kind</span>
+        <select id="tile-type">
+          <option value="switch" data-t>Switch: on/off</option>
+          <option value="dimmer" data-t>Dimmer: on/off + brightness</option>
+          <option value="value" data-t>Value: show a reading</option>
+          <option value="setpoint" data-t>Temperature: target − / +</option>
+          <option value="scene" data-t>Scene</option>
+          <option value="blinds" data-t>Blinds: up / stop / down</option>
+          <option value="mode" data-t>Heating mode</option>
+          <option value="button" data-t>Button: send a value</option>
+        </select>
+      </label>
+      <label class="field">
+        <span data-t>Label</span>
+        <input id="tile-label" type="text" required>
+      </label>
+      <label class="field">
+        <span data-t>Room</span>
+        <input id="tile-group" type="text" list="group-list" placeholder="Room or section (optional)" autocomplete="off" data-t-ph>
+      </label>
+      <div id="tile-fields"></div>
+      <div class="dialog-move">
+        <button id="move-left" class="btn ghost" type="button" data-t>◀ Move</button>
+        <button id="move-right" class="btn ghost" type="button" data-t>Move ▶</button>
+      </div>
+      <div class="dialog-actions">
+        <button id="tile-delete" class="btn danger" type="button" data-t>Delete</button>
+        <span class="spacer"></span>
+        <button class="btn ghost" value="cancel" formnovalidate data-t>Cancel</button>
+        <button id="tile-ok" class="btn primary" value="ok" data-t>OK</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="suggest-dialog" class="dialog wide">
+    <form method="dialog">
+      <h2 data-t>Suggest tiles from the project</h2>
+      <p class="muted" data-t>Pick a part of your ETS project. Commands and their status addresses are paired by name; untick what you do not want.</p>
+      <label class="field">
+        <span data-t>Group range</span>
+        <select id="suggest-range"></select>
+      </label>
+      <ul id="suggest-list" class="suggest-list"></ul>
+      <div class="dialog-actions">
+        <span class="spacer"></span>
+        <button class="btn ghost" value="cancel" data-t>Cancel</button>
+        <button id="suggest-new-page" class="btn" value="page" type="button" data-t>Add as new page</button>
+        <button id="suggest-add" class="btn primary" value="add" type="button" data-t>Add to this page</button>
+      </div>
+    </form>
+  </dialog>
+
+  <datalist id="ga-list"></datalist>
+  <datalist id="group-list"></datalist>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+</body>
+</html>

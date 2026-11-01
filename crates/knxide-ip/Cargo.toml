@@ -1,0 +1,18 @@
+[package]
+name = "knxide-ip"
+description = "KNXnet/IP frames and sans-IO state machines for discovery and tunnelling."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+knxide-core.workspace = true
+tracing.workspace = true
+
+
+[dev-dependencies]
+proptest.workspace = true
+
+[lints]
+workspace = true

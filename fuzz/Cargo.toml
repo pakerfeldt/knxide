@@ -1,0 +1,52 @@
+[package]
+name = "knxide-fuzz"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+knxide-core = { path = "../crates/knxide-core" }
+knxide-ip = { path = "../crates/knxide-ip" }
+knxide-project = { path = "../crates/knxide-project" }
+
+# Not part of the main workspace: needs nightly and libFuzzer.
+[workspace]
+
+[[bin]]
+name = "cemi"
+path = "fuzz_targets/cemi.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "knxip_frame"
+path = "fuzz_targets/knxip_frame.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "dpt"
+path = "fuzz_targets/dpt.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "text"
+path = "fuzz_targets/text.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "project"
+path = "fuzz_targets/project.rs"
+test = false
+doc = false
+bench = false

@@ -1,0 +1,22 @@
+[package]
+name = "knxide-tokio"
+description = "Async tokio client for KNXnet/IP built on knxide-ip."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+knxide-core.workspace = true
+knxide-ip.workspace = true
+socket2.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+knxide-testkit.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread"] }
+
+[lints]
+workspace = true

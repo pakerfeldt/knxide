@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>knxide · KNX bus console</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1118'/%3E%3Cpath d='M6 16h20' stroke='%2334d399' stroke-width='2.5' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='16' r='3.2' fill='%2334d399'/%3E%3Ccircle cx='22' cy='16' r='3.2' fill='%2334d399'/%3E%3Ccircle cx='16' cy='9' r='2.4' fill='%23f5a524'/%3E%3Cpath d='M16 11.4V16' stroke='%23f5a524' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div id="link-banner" class="link-banner" hidden>Lost contact with the knxide-monitor server. Reconnecting…</div>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M5 16h22" class="bm-line"/>
+        <circle cx="10" cy="16" r="3.4" class="bm-node"/>
+        <circle cx="22" cy="16" r="3.4" class="bm-node"/>
+        <path d="M16 10.6V16" class="bm-tap"/>
+        <circle cx="16" cy="8.6" r="2.6" class="bm-tap-node"/>
+      </svg>
+      <div class="brand-text">
+        <span class="brand-name">knxide</span>
+        <span class="brand-sub">KNX bus console</span>
+      </div>
+    </div>
+
+    <form id="connect-form" class="connect" autocomplete="off">
+      <label class="field gateway-field">
+        <span class="field-label">Gateway</span>
+        <input id="gateway" class="mono" placeholder="192.168.1.50" spellcheck="false">
+      </label>
+      <div class="seg" role="radiogroup" aria-label="Transport">
+        <button type="button" class="seg-btn on" data-transport="udp" role="radio" aria-checked="true">UDP</button>
+        <button type="button" class="seg-btn" data-transport="tcp" role="radio" aria-checked="false">TCP</button>
+      </div>
+      <button id="connect-btn" class="btn primary" type="submit">Connect</button>
+    </form>
+
+    <div id="status" class="status" data-status="disconnected" title="">
+      <span class="status-dot"></span>
+      <span class="status-text">
+        <span class="status-label">Disconnected</span>
+        <span class="status-detail"></span>
+      </span>
+    </div>
+
+    <button id="theme-btn" class="icon-btn" type="button" title="Toggle light/dark theme" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" class="icon-sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg viewBox="0 0 24 24" class="icon-moon"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+    </button>
+  </header>
+
+  <main class="layout">
+    <aside class="panel addresses" aria-label="Group addresses and devices">
+      <div class="tabs" role="tablist">
+        <button class="tab on" type="button" role="tab" data-tab="groups" aria-selected="true">
+          Groups <span id="ga-count" class="count">0</span>
+        </button>
+        <button class="tab" type="button" role="tab" data-tab="devices" aria-selected="false">
+          Devices <span id="dev-count" class="count">0</span>
+        </button>
+        <button class="tab" type="button" role="tab" data-tab="health" aria-selected="false">
+          Health <span id="health-count" class="count">0</span>
+        </button>
+      </div>
+
+      <div class="tab-pane" data-pane="groups" role="tabpanel">
+        <div id="project-file" class="project-file" title="Drop an ETS export anywhere to replace it"></div>
+        <div class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input id="ga-search" placeholder="Search name, address, DPT…" spellcheck="false">
+        </div>
+        <div id="ga-tree" class="ga-tree"></div>
+      </div>
+
+      <div class="tab-pane" data-pane="devices" role="tabpanel" hidden>
+        <div class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input id="dev-search" placeholder="Search address or what it talks to…" spellcheck="false">
+        </div>
+        <div id="dev-list" class="ga-tree dev-list"></div>
+      </div>
+
+      <div class="tab-pane" data-pane="health" role="tabpanel" hidden>
+        <div id="health-list" class="ga-tree health-list"></div>
+      </div>
+    </aside>
+
+    <section class="panel monitor" aria-label="Bus monitor">
+      <div class="panel-head monitor-head">
+        <div class="panel-title">
+          <h2>Bus monitor</h2>
+          <span id="tg-count" class="count">0</span>
+        </div>
+        <div class="rate">
+          <canvas id="spark" width="160" height="34" aria-hidden="true"></canvas>
+          <div class="rate-text"><strong id="rate-now">0</strong><span>telegrams/s</span></div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="search grow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input id="filter" placeholder="Filter by address, name, source or value   ( / )" spellcheck="false">
+        </div>
+        <div class="chips" role="group" aria-label="Services">
+          <button class="chip on" data-service="write" type="button">Write</button>
+          <button class="chip on" data-service="read" type="button">Read</button>
+          <button class="chip on" data-service="response" type="button">Response</button>
+          <button class="chip on" data-service="other" type="button">Other</button>
+        </div>
+        <button id="pause-btn" class="btn ghost" type="button">
+          <svg viewBox="0 0 24 24" class="i-pause"><path d="M8 5v14M16 5v14"/></svg>
+          <svg viewBox="0 0 24 24" class="i-play"><path d="M7 5l12 7-12 7z"/></svg>
+          <span>Pause</span>
+          <span id="paused-count" class="badge" hidden>0</span>
+        </button>
+        <button id="clear-btn" class="btn ghost" type="button">Clear</button>
+      </div>
+      <div class="log-head" role="row">
+        <span>Time</span><span>Source</span><span>Destination</span><span>Service</span><span>Value</span><span class="col-raw">Raw</span>
+      </div>
+      <div id="log" class="log" role="log" aria-live="off"></div>
+      <div id="log-empty" class="empty">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 34h52" class="e-line"/><circle cx="18" cy="34" r="5"/><circle cx="46" cy="34" r="5"/><path d="M32 22v12"/><circle cx="32" cy="18" r="4"/></svg>
+        <p class="empty-title">Waiting for the bus</p>
+        <p class="empty-text">Connect to a gateway and telegrams show up here as they happen.</p>
+      </div>
+    </section>
+
+    <aside class="panel send" aria-label="Send">
+      <div class="panel-head"><div class="panel-title"><h2>Send</h2></div></div>
+      <form id="send-form" class="send-form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">Group address</span>
+          <input id="send-ga" class="mono" list="ga-options" placeholder="1/2/3" spellcheck="false">
+        </label>
+        <datalist id="ga-options"></datalist>
+        <div id="send-info" class="send-info"></div>
+        <label class="field">
+          <span class="field-label">Datapoint type <span id="dpt-hint" class="hint"></span></span>
+          <input id="send-dpt" class="mono" list="dpt-options" placeholder="from project, or e.g. 9.001" spellcheck="false">
+        </label>
+        <datalist id="dpt-options">
+          <option value="1.001">Switch</option><option value="1.008">Up/down</option><option value="1.009">Open/close</option>
+          <option value="3.007">Dimming</option><option value="3.008">Blinds</option>
+          <option value="5.001">Percent</option><option value="5.010">Counter</option>
+          <option value="7.001">Pulses</option><option value="9.001">Temperature °C</option><option value="9.004">Lux</option>
+          <option value="9.007">Humidity %</option><option value="13.010">Energy Wh</option><option value="14.056">Power W</option>
+          <option value="16.000">Text</option><option value="17.001">Scene</option><option value="18.001">Scene control</option>
+          <option value="20.102">HVAC mode</option><option value="232.600">RGB</option>
+        </datalist>
+        <div class="field">
+          <span class="field-label">Value</span>
+          <div id="value-control" class="value-control"></div>
+        </div>
+        <div class="send-actions">
+          <button id="write-btn" class="btn primary" type="submit">Write</button>
+          <button id="read-btn" class="btn" type="button">Read</button>
+        </div>
+      </form>
+
+      <div class="panel-head sub"><div class="panel-title"><h2>Activity</h2></div></div>
+      <ol id="activity" class="activity"></ol>
+    </aside>
+  </main>
+
+  <div id="drop" class="drop" hidden>
+    <div class="drop-card">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14"/></svg>
+      <p>Drop an ETS group address export</p>
+      <span>XML or CSV · replaces the current project</span>
+    </div>
+  </div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+</body>
+</html>

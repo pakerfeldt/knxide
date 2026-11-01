@@ -1,0 +1,13 @@
+[package]
+name = "knxide-project"
+description = "Import KNX group addresses and their datapoint types from ETS exports."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+knxide-core.workspace = true
+
+[lints]
+workspace = true
