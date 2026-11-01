@@ -73,7 +73,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ## Apps
 
-Each app has its own README.
+Each app has its own README. Install the monitor and proxy with `cargo install knxide-monitor`
+or `cargo install knxide-proxy`. The dashboard is not on crates.io yet; install it from this
+repository with `cargo install --git https://github.com/pakerfeldt/knxide knxide-dashboard`.
 
 - [knxide-monitor](apps/knxide-monitor): a web page that shows live bus traffic, lets you
   send values, lists devices, and points out problems such as values that stopped changing.

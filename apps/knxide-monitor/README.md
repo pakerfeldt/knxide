@@ -23,7 +23,7 @@ A web console for a KNX bus, built on the knxide crates.
 - Drop an ETS group address export (XML or CSV) on the page to load it.
 
 ```sh
-cargo install --path apps/knxide-monitor --root ~/.local
+cargo install knxide-monitor
 knxide-monitor --gateway 192.168.1.50 --project knx.xml
 # then open http://127.0.0.1:8080
 ```

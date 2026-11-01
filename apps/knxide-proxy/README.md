@@ -7,7 +7,7 @@ KNXnet/IP gateway itself: Home Assistant, knxide-monitor, the knxide CLI, xknx s
 visualisations all connect to the proxy instead of the interface.
 
 ```sh
-cargo install --path apps/knxide-proxy --root ~/.local
+cargo install knxide-proxy
 knxide-proxy --gateway 192.168.1.50
 # clients now use this machine's IP, port 3671
 ```
@@ -44,7 +44,7 @@ Description=knxide KNX tunnelling proxy
 After=network-online.target
 
 [Service]
-ExecStart=%h/.local/bin/knxide-proxy --gateway 192.168.1.50
+ExecStart=%h/.cargo/bin/knxide-proxy --gateway 192.168.1.50
 Restart=on-failure
 
 [Install]
