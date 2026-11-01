@@ -21,7 +21,7 @@ Not supported yet: KNX Secure, USB and serial interfaces, and `.knxproj` files.
 ## Command line
 
 ```sh
-cargo install --git https://github.com/pakerfeldt/knxide knxide-cli
+cargo install knxide-cli
 
 knxide discover                                # find gateways on the network
 knxide monitor --gateway 192.168.1.50          # show bus traffic
@@ -37,8 +37,8 @@ options.
 
 ```toml
 [dependencies]
-knxide-core = { git = "https://github.com/pakerfeldt/knxide" }
-knxide-tokio = { git = "https://github.com/pakerfeldt/knxide" }
+knxide-core = "0.1"
+knxide-tokio = "0.1"
 tokio = { version = "1", features = ["macros", "rt"] }
 ```
 

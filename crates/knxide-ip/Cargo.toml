@@ -5,6 +5,10 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
+repository.workspace = true
+readme.workspace = true
+keywords = ["knx", "knxnet-ip", "home-automation", "sans-io", "tunnelling"]
+categories = ["network-programming", "parser-implementations", "hardware-support"]
 
 [dependencies]
 knxide-core.workspace = true

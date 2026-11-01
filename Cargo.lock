@@ -467,7 +467,7 @@ checksum = "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
 
 [[package]]
 name = "knxide-cli"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "knxide-core",
  "knxide-ip",
@@ -479,14 +479,14 @@ dependencies = [
 
 [[package]]
 name = "knxide-core"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "proptest",
 ]
 
 [[package]]
 name = "knxide-dashboard"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "axum",
  "futures-util",
@@ -505,7 +505,7 @@ dependencies = [
 
 [[package]]
 name = "knxide-ip"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "knxide-core",
  "proptest",
@@ -514,7 +514,7 @@ dependencies = [
 
 [[package]]
 name = "knxide-monitor"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "axum",
  "futures-util",
@@ -533,14 +533,14 @@ dependencies = [
 
 [[package]]
 name = "knxide-project"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "knxide-core",
 ]
 
 [[package]]
 name = "knxide-proxy"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "knxide-core",
  "knxide-ip",
@@ -554,7 +554,7 @@ dependencies = [
 
 [[package]]
 name = "knxide-testkit"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "knxide-core",
  "knxide-ip",
@@ -563,7 +563,7 @@ dependencies = [
 
 [[package]]
 name = "knxide-tokio"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "knxide-core",
  "knxide-ip",

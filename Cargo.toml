@@ -3,17 +3,19 @@ resolver = "3"
 members = ["crates/*", "apps/*"]
 
 [workspace.package]
-version = "0.0.0"
+version = "0.1.0"
 edition = "2024"
 # Latest stable at M0 (1.99) minus three releases. Raise deliberately, never as a side effect.
 rust-version = "1.96"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/pakerfeldt/knxide"
+readme = "README.md"
 
 [workspace.dependencies]
-knxide-core = { path = "crates/knxide-core", version = "0.0.0" }
-knxide-ip = { path = "crates/knxide-ip", version = "0.0.0" }
-knxide-tokio = { path = "crates/knxide-tokio", version = "0.0.0" }
-knxide-project = { path = "crates/knxide-project", version = "0.0.0" }
+knxide-core = { path = "crates/knxide-core", version = "0.1.0" }
+knxide-ip = { path = "crates/knxide-ip", version = "0.1.0" }
+knxide-tokio = { path = "crates/knxide-tokio", version = "0.1.0" }
+knxide-project = { path = "crates/knxide-project", version = "0.1.0" }
 knxide-testkit = { path = "crates/knxide-testkit" }
 
 proptest = "1"
