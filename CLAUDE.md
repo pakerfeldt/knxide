@@ -23,6 +23,7 @@ protocol code.
 | `apps/knxide-monitor` | web console (axum + WebSocket, page in `static/`), `publish = false` |
 | `apps/knxide-dashboard` | customisable dashboard (tiles bound to group addresses, `dashboard.json`), `publish = false` |
 | `apps/knxide-proxy` | tunnelling proxy: one upstream tunnel shared by many clients; server side is `knxide_ip::server` |
+| `apps/knxide-mcp` | MCP server, stdio or Streamable HTTP (`--listen`, bearer `KNXIDE_MCP_TOKEN`); tunnelling or `--routing`; hand-rolled JSON-RPC, no SDK; writes only with `--allow-write`; `Dockerfile` builds from repo root; `publish = false` |
 
 ## Commands
 

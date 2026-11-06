@@ -1,7 +1,7 @@
 # knxide
 
 A Rust library for talking to a KNX bus over KNXnet/IP. It also comes with a command-line
-tool and three small web apps.
+tool, three small web apps and an MCP server.
 
 Written from the KNX specification. No unsafe code, and the decoders are fuzzed.
 
@@ -83,6 +83,8 @@ repository with `cargo install --git https://github.com/pakerfeldt/knxide knxide
   lights, temperatures, blinds and scenes. You set it up in the browser.
 - [knxide-proxy](apps/knxide-proxy): shares one connection to your gateway with many
   programs, since most gateways only allow a few at a time.
+- [knxide-mcp](apps/knxide-mcp): an MCP server, so AI assistants such as Claude can look up,
+  read and (if you allow it) write group addresses.
 
 To try the apps without a real bus, start the fake gateway and point an app at it:
 

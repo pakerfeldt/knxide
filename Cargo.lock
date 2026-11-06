@@ -523,6 +523,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "knxide-mcp"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "knxide-core",
+ "knxide-ip",
+ "knxide-project",
+ "knxide-testkit",
+ "knxide-tokio",
+ "serde_json",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "knxide-monitor"
 version = "0.1.0"
 dependencies = [

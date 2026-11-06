@@ -1,0 +1,9 @@
+# Docker build context is the repository root (see apps/*/Dockerfile).
+target
+fuzz
+.git
+docs
+*.xml
+*.csv
+*.overrides.json
+dashboard.json
