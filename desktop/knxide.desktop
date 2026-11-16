@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=knxide
+Comment=Program KNX devices
+Exec=knxide
+Icon=knxide
+Terminal=false
+Categories=Utility;
+StartupWMClass=knxide

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- A wall plate with two rockers, as the page draws them: the upper one lit and wired. -->
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef1ef"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#2f6fed" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#2f6fed" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="40" y="40" width="432" height="432" rx="84" fill="url(#plate)" stroke="#c3ccc7" stroke-width="8"/>
+  <rect x="104" y="104" width="304" height="304" rx="34" fill="#f0f2f1" stroke="#c3ccc7" stroke-width="8"/>
+  <path d="M104 256H408" stroke="#c3ccc7" stroke-width="8"/>
+  <circle cx="160" cy="180" r="44" fill="url(#glow)"/>
+  <circle cx="160" cy="180" r="17" fill="#2f6fed"/>
+  <circle cx="160" cy="332" r="15" fill="none" stroke="#b4beb9" stroke-width="8"/>
+  <path d="M408 180H472" stroke="#1d7a4c" stroke-width="22" stroke-linecap="butt"/>
+  <circle cx="408" cy="180" r="27" fill="#1d7a4c" stroke="#f0f2f1" stroke-width="8"/>
+</svg>
