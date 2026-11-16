@@ -69,7 +69,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 | `knxide-tokio` | Ready-to-use async client on top of tokio |
 | `knxide-project` | Reads ETS group address exports |
 | `knxide-cli` | The `knxide` command |
-| `knxide-testkit` | A fake gateway for tests |
+| `knxide-program` | Experimental: plans the download of an application program to a device from an ETS project export. No I/O. Not on crates.io |
+| `knxide-testkit` | A fake gateway and a made-up project for tests |
 
 ## Apps
 
@@ -85,12 +86,26 @@ repository with `cargo install --git https://github.com/pakerfeldt/knxide knxide
   programs, since most gateways only allow a few at a time.
 - [knxide-mcp](apps/knxide-mcp): an MCP server, so AI assistants such as Claude can look up,
   read and (if you allow it) write group addresses.
+- [knxide-programmer](apps/knxide-programmer): experimental. A web page that opens an ETS
+  project export, shows it as rooms with the buttons and the lights they control, lets you
+  change settings and links, and programs the devices. It handles three kinds of device
+  (masks 0021, 0701 and 0705), and much of what it does has not been seen on a real bus:
+  read its README before pointing it at a real installation. Not on crates.io.
+- [knxide-desktop](desktop): the programmer as a desktop application, in a window of its
+  own instead of a browser tab. It is built separately from the rest, see its README.
 
 To try the apps without a real bus, start the fake gateway and point an app at it:
 
 ```sh
 cargo run -p knxide-testkit --example demo_gateway -- --project knx.xml   # --project is optional
 cargo run -p knxide-dashboard -- --gateway 127.0.0.1
+```
+
+The programmer needs no gateway to be tried: it can simulate the devices of a made-up project.
+
+```sh
+cargo run -p knxide-testkit --example demo_project -- demo.knxproj
+cargo run -p knxide-programmer -- demo.knxproj --simulate
 ```
 
 ## Building
