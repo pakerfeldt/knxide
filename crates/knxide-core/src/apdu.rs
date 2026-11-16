@@ -96,6 +96,34 @@ pub const APCI_RESTART: u16 = 0x380;
 /// configuration; knxide never sends it.
 pub const APCI_RESTART_MASTER_RESET: u16 = 0x381;
 
+/// `A_Memory_Read`: APCI `0x200`, the number of octets (1–63) in its low 6 bits, followed by
+/// the 16-bit address. Spec: 3/3/7 §3.5.
+pub const APCI_MEMORY_READ: u16 = 0x200;
+/// `A_Memory_Response`: APCI `0x240`, the number of octets in its low 6 bits, followed by the
+/// address and the octets. A number of 0 reports an error.
+pub const APCI_MEMORY_RESPONSE: u16 = 0x240;
+/// `A_Memory_Write`: APCI `0x280`, the number of octets in its low 6 bits, followed by the
+/// address and the octets.
+pub const APCI_MEMORY_WRITE: u16 = 0x280;
+/// `A_DeviceDescriptor_Read`: APCI `0x300`, the descriptor type in its low 6 bits.
+/// Spec: 3/3/7 §3.4.
+pub const APCI_DEVICE_DESCRIPTOR_READ: u16 = 0x300;
+/// `A_DeviceDescriptor_Response`: APCI `0x340`, the descriptor type in its low 6 bits,
+/// followed by the descriptor.
+pub const APCI_DEVICE_DESCRIPTOR_RESPONSE: u16 = 0x340;
+/// `A_Authorize_Request`: one reserved octet and the 4-octet key. Spec: 3/3/7 §3.5.
+pub const APCI_AUTHORIZE_REQUEST: u16 = 0x3D1;
+/// `A_Authorize_Response`: one octet, the granted access level.
+pub const APCI_AUTHORIZE_RESPONSE: u16 = 0x3D2;
+/// `A_PropertyValue_Read`: object index, property identifier, 4 bits element count and
+/// 12 bits start index. Spec: 3/3/7 §3.4.
+pub const APCI_PROPERTY_VALUE_READ: u16 = 0x3D5;
+/// `A_PropertyValue_Response`: as the read, followed by the element data. An element count of
+/// 0 reports an error.
+pub const APCI_PROPERTY_VALUE_RESPONSE: u16 = 0x3D6;
+/// `A_PropertyValue_Write`: as the read, followed by the element data.
+pub const APCI_PROPERTY_VALUE_WRITE: u16 = 0x3D7;
+
 /// 4-bit APCI codes of the group value services (the top 4 bits of the 10-bit APCI).
 const APCI_GROUP_VALUE_READ: u16 = 0b0000;
 const APCI_GROUP_VALUE_RESPONSE: u16 = 0b0001;

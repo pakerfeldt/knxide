@@ -558,6 +558,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "knxide-program"
+version = "0.1.0"
+dependencies = [
+ "knxide-core",
+ "knxide-testkit",
+ "proptest",
+]
+
+[[package]]
+name = "knxide-programmer"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "futures-util",
+ "knxide-core",
+ "knxide-ip",
+ "knxide-program",
+ "knxide-testkit",
+ "knxide-tokio",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-tungstenite 0.30.0",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "knxide-project"
 version = "0.1.0"
 dependencies = [

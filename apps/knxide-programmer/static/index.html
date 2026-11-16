@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>knxide</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="start" class="start"></div>
+  <div id="app" hidden>
+    <div class="top" id="top"></div>
+    <div class="main" id="main">
+      <nav class="rail" id="rail" aria-label="Rooms"></nav>
+      <div class="stage" id="stage"></div>
+    </div>
+  </div>
+  <div id="layer"></div>
+  <div id="toast"></div>
+  <datalist id="all-addresses"></datalist>
+  <script src="model.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

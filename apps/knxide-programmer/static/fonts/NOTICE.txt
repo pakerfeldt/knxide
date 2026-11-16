@@ -1,0 +1,11 @@
+The typefaces in this directory are served to the page by knxide-programmer. They are not
+covered by the licence of the code. Both families are under the SIL Open Font License,
+Version 1.1 (https://openfontlicense.org/open-font-license-official-text/).
+
+Barlow, Barlow Semi Condensed
+  Copyright 2017 The Barlow Project Authors (https://github.com/jpt/barlow)
+
+JetBrains Mono
+  Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)
+
+The files are the Latin subsets as distributed through Google Fonts, unchanged.

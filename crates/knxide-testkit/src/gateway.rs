@@ -61,8 +61,11 @@ struct Tunnel {
     recv_sequence: u8,
 }
 
+/// A simulated device behind the gateway: gets every frame addressed to it and returns the
+/// frames it puts on the bus in answer. See [`FakeGateway::attach_device`].
+pub type DeviceHandler = Box<dyn FnMut(&LData) -> Vec<LData> + Send>;
+
 /// Sans-IO server logic. Feed it frames, get back frames to send.
-#[derive(Debug)]
 pub struct GatewayCore {
     /// Behaviour knobs.
     pub behaviour: Behaviour,
@@ -81,6 +84,16 @@ pub struct GatewayCore {
     restarts: Vec<IndividualAddress>,
     frames: Vec<Frame>,
     control_endpoint: SocketAddrV4,
+    devices: HashMap<IndividualAddress, DeviceHandler>,
+}
+
+impl std::fmt::Debug for GatewayCore {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("GatewayCore")
+            .field("address", &self.address)
+            .field("tunnels", &self.tunnels)
+            .finish_non_exhaustive()
+    }
 }
 
 impl GatewayCore {
@@ -99,7 +112,15 @@ impl GatewayCore {
             restarts: Vec::new(),
             frames: Vec::new(),
             control_endpoint,
+            devices: HashMap::new(),
         }
+    }
+
+    /// Put a simulated device at `address`. Frames addressed to it are confirmed as sent and
+    /// handed to `handler`; what it returns reaches every tunnel as `L_Data.ind`. This replaces
+    /// the built-in behaviour (acknowledging numbered data) for that address.
+    pub fn attach_device(&mut self, address: IndividualAddress, handler: DeviceHandler) {
+        self.devices.insert(address, handler);
     }
 
     fn dibs(&self) -> Vec<Dib> {
@@ -282,8 +303,14 @@ impl GatewayCore {
         self.received.push(Cemi::LDataReq(ldata.clone()));
         // Individually addressed frames are acknowledged on the bus only by an existing device;
         // without that, the interface confirms with an error.
-        let unknown_device =
-            matches!(ldata.destination, Destination::Individual(ia) if ia != self.device_address);
+        let attached = match ldata.destination {
+            Destination::Individual(address) if self.devices.contains_key(&address) => {
+                Some(address)
+            }
+            _ => None,
+        };
+        let unknown_device = attached.is_none()
+            && matches!(ldata.destination, Destination::Individual(ia) if ia != self.device_address);
         let failed = self.behaviour.confirm_errors || unknown_device;
         if self.behaviour.send_confirmations {
             let mut con = ldata.clone();
@@ -291,6 +318,16 @@ impl GatewayCore {
             self.send_to_tunnel(channel_id, &Cemi::LDataCon(con), out);
         }
         if failed {
+            return;
+        }
+        if let Some(address) = attached {
+            let answers = match self.devices.get_mut(&address) {
+                Some(handler) => handler(&ldata),
+                None => Vec::new(),
+            };
+            for answer in answers {
+                self.indicate(&answer, out);
+            }
             return;
         }
         // The simulated device acknowledges connected data and records restarts.
@@ -471,6 +508,11 @@ impl FakeGateway {
     /// Change behaviour.
     pub fn behaviour(&self, change: impl FnOnce(&mut Behaviour)) {
         change(&mut self.core().behaviour);
+    }
+
+    /// Put a simulated device at `address`; see [`GatewayCore::attach_device`].
+    pub fn attach_device(&self, address: IndividualAddress, handler: DeviceHandler) {
+        self.core().attach_device(address, handler);
     }
 
     /// Set the value a simulated device returns for reads of `ga`.

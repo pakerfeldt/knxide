@@ -1,0 +1,23 @@
+[package]
+name = "knxide-program"
+description = "Compute, offline, the memory image and the bus requests of a KNX application download."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+keywords = ["knx", "ets", "home-automation", "device-programming"]
+categories = ["parser-implementations", "encoding"]
+# Experimental: reproduces three recorded downloads, nothing else is verified yet.
+publish = false
+
+[dependencies]
+knxide-core.workspace = true
+
+[dev-dependencies]
+knxide-testkit.workspace = true
+proptest.workspace = true
+
+[lints]
+workspace = true

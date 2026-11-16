@@ -59,8 +59,15 @@ impl Client {
         restart
     }
 
-    /// Send a TPDU to one device, at system priority like other management traffic.
-    async fn send_to_device(&self, device: IndividualAddress, tpdu: Tpdu) -> Result<(), Error> {
+    /// Send a TPDU to one device, at system priority like other management traffic: the
+    /// building block of a transport layer connection (`T_Connect`, numbered data, `T_ACK`,
+    /// `T_Disconnect`; spec 3/3/4 §5). Answers arrive as [`ClientEvent::Frame`] from `device`.
+    ///
+    /// Over a tunnel the call resolves when the interface confirms the frame, and fails with
+    /// [`Error::DeviceNotResponding`] when no device acknowledged it on the bus. Over routing
+    /// the frame goes out as `L_Data.ind` with the client's own individual address as source,
+    /// and nothing is learned about its fate.
+    pub async fn send_to_device(&self, device: IndividualAddress, tpdu: Tpdu) -> Result<(), Error> {
         let mut ldata = LData::new(device, tpdu);
         ldata.priority = Priority::System;
         match self.send(Cemi::LDataReq(ldata)).await {
