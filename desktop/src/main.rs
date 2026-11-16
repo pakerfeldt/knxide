@@ -1,4 +1,4 @@
-//! `knxide`: the knxide programmer as a desktop application.
+//! `knxide-desktop`: the knxide programmer as a desktop application.
 //!
 //! The same server as `knxide-programmer` runs inside this program, on a port of this machine
 //! that the system picks, and a window shows its page. Nothing of the page is changed for it.
@@ -6,8 +6,8 @@
 //! project, a question before closing in the middle of an operation, and one running copy.
 //!
 //! ```sh
-//! knxide                 # the bus over KNXnet/IP routing, wired before wireless
-//! knxide --simulate      # no bus: simulated devices
+//! knxide-desktop              # the bus over KNXnet/IP routing, wired before wireless
+//! knxide-desktop --simulate   # no bus: simulated devices
 //! ```
 
 // No console window beside the application on Windows.
@@ -26,11 +26,12 @@ const NAME: &str = "knxide";
 const WINDOW: &str = "main";
 
 const USAGE: &str = "\
-knxide: program KNX devices from ETS project exports
+knxide-desktop: program KNX devices from ETS project exports, in a window
 
 USAGE:
-    knxide [PROJECT] [--projects DIR] [--gateway HOST[:PORT] [--tcp] | --routing [IP]
-           [--address A.L.D] | --simulate] [--state FILE] [--language LANG]
+    knxide-desktop [PROJECT] [--projects DIR] [--gateway HOST[:PORT] [--tcp]
+                   | --routing [IP] [--address A.L.D] | --simulate] [--state FILE]
+                   [--language LANG]
 
     The options are those of knxide-programmer, with one difference: without --gateway,
     --routing or --simulate the bus is reached by KNXnet/IP routing, on the interface chosen
@@ -50,8 +51,9 @@ USAGE:
 fn main() {
     tracing_subscriber::fmt()
         .with_env_filter(
-            tracing_subscriber::EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| "knxide=info,knxide_programmer=info,knxide_tokio=info".into()),
+            tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
+                "knxide_desktop=info,knxide_programmer=info,knxide_tokio=info".into()
+            }),
         )
         .init();
     let options = match startup::parse(std::env::args().skip(1)) {
@@ -61,7 +63,7 @@ fn main() {
             return;
         }
         Err(err) => {
-            eprintln!("knxide: {err}\n\n{USAGE}");
+            eprintln!("knxide-desktop: {err}\n\n{USAGE}");
             std::process::exit(2);
         }
     };
@@ -127,7 +129,7 @@ fn main() {
         })
         .run(tauri::generate_context!());
     if let Err(err) = result {
-        eprintln!("knxide: {err}");
+        eprintln!("knxide-desktop: {err}");
         std::process::exit(1);
     }
 }

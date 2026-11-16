@@ -12,10 +12,6 @@ publish = false
 # with it (GTK and WebKitGTK on Linux), which the library crates and their checks stay free of.
 [workspace]
 
-[[bin]]
-name = "knxide"
-path = "src/main.rs"
-
 [dependencies]
 axum = { version = "0.8", default-features = false, features = ["http1", "tokio"] }
 knxide-programmer = { path = "../apps/knxide-programmer" }

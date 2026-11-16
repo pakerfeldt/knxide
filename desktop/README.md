@@ -17,7 +17,7 @@ its own `Cargo.lock` and `target/`.
 ## Install (Linux)
 
 ```sh
-desktop/install.sh            # build, then: ~/.local/bin/knxide, a launcher entry, the icon
+desktop/install.sh            # build, then: ~/.local/bin/knxide-desktop, a launcher entry, the icon
 desktop/install.sh --remove   # take those away again
 ```
 
@@ -27,14 +27,17 @@ portal for the file chooser (`xdg-desktop-portal` with a backend such as
 
 Or without installing: `cargo run --release --manifest-path desktop/Cargo.toml`.
 
+The program is called `knxide-desktop`; in the launcher it is "knxide". (`knxide` on the
+command line is the tool of `knxide-cli`.)
+
 ## What differs from the page in a browser
 
 - **The bus.** Started without options, as a launcher starts it, the bus is reached by
   KNXnet/IP routing from `0.0.2`, on the interface chosen each time the bus is used: a wired
   one that is up before a wireless one. Nothing is sent until an operation is asked for. The
   options of `knxide-programmer` (`--gateway`, `--routing IP`, `--address`, `--simulate`,
-  `--projects`, `--language`, a `PROJECT`) are taken on the command line as there; `knxide
-  --help` lists them. There is no settings screen yet: to make another way to the bus the
+  `--projects`, `--language`, a `PROJECT`) are taken on the command line as there;
+  `knxide-desktop --help` lists them. There is no settings screen yet: to make another way to the bus the
   standing one, put the option on the `Exec=` line of
   `~/.local/share/applications/knxide.desktop`.
 - **Export** asks where to save the project file, in the system's file chooser, where a

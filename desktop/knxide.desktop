@@ -2,8 +2,8 @@
 Type=Application
 Name=knxide
 Comment=Program KNX devices
-Exec=knxide
+Exec=knxide-desktop
 Icon=knxide
 Terminal=false
 Categories=Utility;
-StartupWMClass=knxide
+StartupWMClass=knxide-desktop
