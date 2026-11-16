@@ -193,23 +193,28 @@ macro_rules! int_dpt {
 
 int_dpt!(
     /// DPT 6.xxx, 1 byte signed (percent, counter). 6.020 (status with mode) is not this type.
-    dpt6, i8
+    dpt6,
+    i8
 );
 int_dpt!(
     /// DPT 7.xxx, 2 bytes unsigned (pulses, time periods, …).
-    dpt7, u16
+    dpt7,
+    u16
 );
 int_dpt!(
     /// DPT 8.xxx, 2 bytes signed.
-    dpt8, i16
+    dpt8,
+    i16
 );
 int_dpt!(
     /// DPT 12.xxx, 4 bytes unsigned (counters, volumes).
-    dpt12, u32
+    dpt12,
+    u32
 );
 int_dpt!(
     /// DPT 13.xxx, 4 bytes signed (counters, energy).
-    dpt13, i32
+    dpt13,
+    i32
 );
 
 /// DPT 9.xxx, 2-byte float: temperature, lux, humidity, …
